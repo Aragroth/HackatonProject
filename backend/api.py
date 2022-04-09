@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from endpoints import button, websockets
 from core.config import settings
 
-# openapi_prefix="/api"
-app = FastAPI()
+#
+app = FastAPI(openapi_prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,7 +17,7 @@ app.add_middleware(
 
 app.include_router(
     button.router,
-    prefix=settings.API_V1_STR + '/button',
+    prefix='/button',
     tags=['Get data from button'],
 )
 

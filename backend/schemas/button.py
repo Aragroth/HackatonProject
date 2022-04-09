@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 # Подаётся на сервер
 class ButtonEventBase(BaseModel):
-    id: int
+    button_id: int
     is_long_click: bool
 
 

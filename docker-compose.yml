@@ -18,17 +18,17 @@ services:
             - 5050:5050
         env_file:
             - backend/.env
-#        logging:
-#            driver: none
         depends_on:
             - postgresql
         networks:
             - main
 
     backend:
-        # entrypoint: "uvicorn backend.api:app --host 0.0.0.0 --reload"
+        entrypoint: "uvicorn api:app --host 0.0.0.0 --reload"
         ports:
             - 8000:8000
+        volumes:
+            - ./backend:/backend
         build:
             context: ./backend
             dockerfile: backend.dockerfile
@@ -49,13 +49,28 @@ services:
             - traefik.http.middlewares.clear_prefix.stripprefix.forceSlash=true
             - traefik.http.services.backend.loadbalancer.server.port=8000
 
+    preinsert_data:
+        volumes:
+            - ./backend:/backend
+        entrypoint: "python3 preinsert_db.py"
+        build:
+            context: ./backend
+            dockerfile: backend.dockerfile
+        env_file:
+            - ./backend/.env
+        networks:
+            - main
+        depends_on:
+            - postgresql
+            - backend
+
     traefik:
         image: traefik:v2.3
         ports:
             - 80:80
             - 443:443
             # traefik dashboard
-            - 8080:8080
+#            - 8080:8080
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - ./traefik/traefik.yml:/traefik.yml:ro

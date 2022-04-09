@@ -1,1 +1,1 @@
-from .button import ButtonEvent
+from .button import ButtonEvent, Button
