@@ -11,8 +11,8 @@ print("Finished updating database")
 print("Inserting data")
 
 with SessionLocal() as db:
-    button = Button(id=123242, place="Первый лежак")
-    button2 = Button(id=123243, place="Второй лежак")
+    button = Button(id="123245_1", place="Первый лежак")
+    button2 = Button(id="123245_2", place="Второй лежак")
 
     db.add(button)
     db.add(button2)

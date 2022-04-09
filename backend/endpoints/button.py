@@ -18,5 +18,10 @@ async def save_button_event(
         db: Session = Depends(session.get_db),
 ):
     crud.button.create(db, obj_in=new_button_click)
-    await manager.broadcast(f"The button was clicked")
+    await manager.broadcast({
+        "id": new_button_click.button_id,
+        'status': 'clicked' if not new_button_click.is_long_click else 'double_click',
+        'button_address': 'test',
+    })
+
     return {"response": "ok"}
