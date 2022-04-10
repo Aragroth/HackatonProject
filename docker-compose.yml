@@ -42,9 +42,9 @@ services:
         labels:
             - traefik.enable=true
             - traefik.http.routers.http-catchall.rule=PathPrefix(`/api`)
-            - traefik.http.routers.http-catchall.entrypoints=secureweb
-            - traefik.http.routers.http-catchall.tls.certresolver=letsEncrypt
-            - traefik.http.routers.http-catchall.middlewares=clear_prefix
+            - traefik.http.routers.http-catchall.entrypoints=web
+            #- traefik.http.routers.http-catchall.tls.certresolver=letsEncrypt
+            #- traefik.http.routers.http-catchall.middlewares=clear_prefix
             - traefik.http.middlewares.clear_prefix.stripprefix.prefixes=/api,/dashboard
             - traefik.http.middlewares.clear_prefix.stripprefix.forceSlash=true
             - traefik.http.services.backend.loadbalancer.server.port=8000
